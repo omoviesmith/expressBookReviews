@@ -1,9 +1,11 @@
 const express = require('express');
 let books = require("./booksdb.js");
 let isValid = require("./auth_users.js").isValid;
-// let users = require("./auth_users.js").users;
-const users = require('./users.js');
+const users = require("./auth_users.js").users; // Update to use users from auth_users.js
 const public_users = express.Router();
+const axios = require('axios');
+
+const url  = "https://omoviesmith-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/"
 
 public_users.post("/register", (req,res) => {
     const username = req.body.username;
@@ -28,10 +30,20 @@ public_users.post("/register", (req,res) => {
     return res.status(404).json({message: "Unable to register user."});
 });
 
-// Get the book list available in the shop
-public_users.get('/', function (req, res) {
-  res.status(200).json(books);
-});
+// // Get the book list available in the shop
+// public_users.get('/', function (req, res) {
+//   res.status(200).json(books);
+// });
+
+// Get the book list available in the shop using async-await
+public_users.get('/', async function (req, res) {
+    try {
+      const response = await axios.get(url);
+      res.status(200).json(response.data);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn', function (req, res) {

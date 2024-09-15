@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 let books = require("./booksdb.js");
 const regd_users = express.Router();
 
-// let users = [];
-const users = require('./users.js');
+let users = [];
+// let users = require('./general.js').users; // Ensure this references the same array
 
 const isValid = (username) => {
     // Filter the users array for any user with the same username
