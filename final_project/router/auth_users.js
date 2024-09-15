@@ -41,11 +41,7 @@ regd_users.post("/login", (req,res) => {
         return res.status(404).json({ message: "Error logging in" });
     }
 
-    // Check is username already exist
-    if (isValid(username)){
-        return res.status(404).json({ message: "User already exist" });
-    }
-
+    console.log(users)
     // Authenticate user
     if (authenticatedUser(username, password)) {
         // Generate JWT access token
