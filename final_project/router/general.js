@@ -12,7 +12,7 @@ public_users.post("/register", (req,res) => {
     // Check if both username and password are provided
     if (username && password) {
         // Check if the user does not already exist
-        if (!doesExist(username)) {
+        if (!isValid(username)) {
             // Add the new user to the users array
             users.push({"username": username, "password": password});
             return res.status(200).json({message: "User successfully registered. Now you can login"});
@@ -23,19 +23,6 @@ public_users.post("/register", (req,res) => {
     // Return error if username or password is missing
     return res.status(404).json({message: "Unable to register user."});
 });
-
-// // Register a new user
-// public_users.post("/register", (req, res) => {
-//   const { username, password } = req.body;
-//   if (!username || !password) {
-//     return res.status(400).json({ message: "Username and password are required" });
-//   }
-//   if (users.some(user => user.username === username)) {
-//     return res.status(400).json({ message: "Username already exists" });
-//   }
-//   users.push({ username, password });
-//   return res.status(200).json({ message: "User successfully registered" });
-// });
 
 // Get the book list available in the shop
 public_users.get('/', function (req, res) {
